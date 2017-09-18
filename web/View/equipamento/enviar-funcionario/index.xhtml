@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">   
+
+        <h:form>
+            <p:growl autoUpdate="true" />
+            <p:tabView >
+
+                <p:tab title="Enviar Funcionário Rep" id="tab01">
+                    <p:panel >
+
+                        <p:dataTable id="tbl" var="ptoequipamento" value="#{ptoEquipamentoBeanHenry.ptoEquipamentos}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                     - Página: {currentPage}/{totalPages} ]"
+                                     paginator="true" rows="5" style="margin-bottom:20px">
+
+                            <f:facet name="header">
+                                Equipamentos 
+                            </f:facet>
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <p:graphicImage value="/images/excel.png" width="24"  />
+                                    <p:dataExporter type="xls" target="tbl" fileName="Equipamentos"  />
+                                </h:commandLink>
+
+
+                            </f:facet>  
+
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <!--<p:panelGrid  columns="4" columnClasses="label,value" style="width:300px">-->
+                                <p:dataTable id="tb2" var="funcionarios" value="#{funcionarioBean.funcionarios}" 
+
+                                             paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <p:column headerText="Nome" filterBy="#{funcionarios.nome}" filterMatchMode="contains" >
+                                        <h:outputText id="nome" value="#{funcionarios.nome}"  />
+                                    </p:column>
+                                    <p:column headerText="Matricula" filterBy="#{funcionarios.matricula}" filterMatchMode="contains">
+                                        <h:outputText id="matricula" value="#{funcionarios.matricula}"  />
+                                    </p:column>
+                                    <p:column headerText="PIS" filterBy="#{funcionarios.pis}" filterMatchMode="contains">
+                                        <h:outputText id="pis" value="#{funcionarios.pis}"  />
+                                    </p:column>
+                                    <p:column headerText="Enviar" style="width:35px" >
+                                        <p:commandLink  update="@form" process="@form" value="Enviar" action="#{funcionarioBean.conectarFuncionario(ptoequipamento, funcionarios)}"/>
+                                    </p:column>
+
+
+                                </p:dataTable>
+                                <!--</p:panelGrid>-->
+                            </p:rowExpansion>
+
+                            <p:column headerText="Equipamento" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                <h:outputText id="equipamento" value="#{ptoequipamento.descricao}"  />
+                            </p:column>
+
+                            <p:column headerText="IP" filterBy="#{ptoequipamento.ip}" sortBy="#{ptoequipamento.ip}" filterMatchMode="contains">
+                                <h:outputText  id="ip" value="#{ptoequipamento.ip}" />
+                            </p:column>
+
+                            <p:column headerText="Modelo" filterBy="#{ptoequipamento.modelo}" sortBy="#{ptoequipamento.modelo}" filterMatchMode="contains">
+                                <p:outputLabel  id="modelo" value="#{ptoequipamento.modelo}" />
+                            </p:column>
+
+                            <p:column id="result2" headerText="Nsr" filterBy="#{ptoequipamento.ultimonsr}" sortBy="#{ptoequipamento.ultimonsr}" filterMatchMode="contains">
+                                <p:outputLabel  id="ultimonsr" value="#{ptoequipamento.ultimonsr} "  />
+                            </p:column>
+
+                        </p:dataTable >
+
+
+
+                    </p:panel>
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+    </ui:define>
+
+
+
+</ui:composition>

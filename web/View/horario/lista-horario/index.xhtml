@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Horários</title>
+
+        <h:form>
+            <p:growl autoUpdate="true" />
+
+            <p:tabView>
+                <p:tab title="Horários" >
+                    <p:commandButton value="Novo" action="/View/horario/cadastrar-horario/index" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="horario"  value="#{horarioBean.horarios}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="10" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        HORÁRIOS
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Funcionarios"  />
+                                        </h:commandLink>
+
+                                    </f:facet>
+
+
+                                    <p:column headerText="Nome" filterBy="#{horario.nome}" sortBy="#{horario.nome}" filterMatchMode="contains">
+                                        <h:outputText id="nome" value="#{horario.nome}  "  />
+                                    </p:column>
+
+                                    <p:column headerText="Entrada 01" filterBy="#{horario.horaEntradaT1S}" sortBy="#{horario.horaEntradaT1S}" filterMatchMode="contains">
+                                        <h:outputLabel   id="entrada01" value="#{horario.horaEntradaT1S}" >
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputLabel>
+                                    </p:column>
+
+                                    <p:column headerText="Saida 01" filterBy="#{horario.horaSaidaT1S}" sortBy="#{horario.horaSaidaT1S}" filterMatchMode="contains">
+                                        <h:outputText  id="saida01" value="#{horario.horaSaidaT1S}" >
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Entrada 02" filterBy="#{horario.horaEntradaT2S}" sortBy="#{horario.horaEntradaT2S}" filterMatchMode="contains">
+                                        <h:outputText  id="entrada02" value="#{horario.horaEntradaT2S}" >
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Saida 02" filterBy="#{horario.horaSaidaT2S}" sortBy="#{horario.horaSaidaT2S}" filterMatchMode="contains">
+                                        <h:outputText  id="saida02" value="#{horario.horaSaidaT2S}" >
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:80px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{horarioBean.editar(horario)}"/>
+                                        <p:commandButton icon="fa fw fa-trash-o" ajax="false" action="#{horarioBean.excluir(horario)}"/>
+
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+
+
+
+                                </p:dataTable >
+
+                            </div>
+                        </div>
+
+
+                    </h:panelGrid > 
+
+
+
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

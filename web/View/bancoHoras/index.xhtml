@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/template.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+	<ui:define name="titulo">
+		<h:outputText value="#{escalaBean.titulo}" />
+	</ui:define>
+
+	<ui:define name="corpo">
+
+		<ui:include src="/View/js/calendar-pt.xhtml" />
+
+		<h:form id="frm" prependId="false">
+			<p:growl id="msg" showDetail="true" sticky="true" />
+
+			<p:outputPanel id="panelGeral">
+				<p:panel id="pnlEscala" >
+					<p:panelGrid columns="4" style="width:100%;" id="pnlGridSetorGerenciado">
+						<p:outputLabel   value="Período">
+							<br />
+							<p:selectOneMenu  converter="entityConverter" >
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+								<f:selectItems  var="item"  />
+								<p:ajax event="change"   />
+							</p:selectOneMenu>
+                                    		</p:outputLabel>
+						<p:outputLabel id="outLabelSetor" for="iptSlctMenuSetor" value="Setor">
+							<br />
+							<p:selectOneMenu filter="true" filterMatchMode="contains" id="iptSlctMenuSetor" converter="entityConverter"
+								>
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+								<f:selectItems  var="item"  />
+								<p:ajax event="change"  update="iptSlctMenuServidor" />
+							</p:selectOneMenu>
+						</p:outputLabel>
+						<p:outputLabel id="outLabelServidor" for="iptSlctMenuServidor" value="Servidor">
+							<br />
+							<p:selectOneMenu filter="true" filterMatchMode="contains" id="iptSlctMenuServidor" converter="entityConverter"
+								 required="true" requiredMessage="Escolha um servidor">
+								<f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+								<f:selectItems  var="item"  />
+								<p:ajax event="change"   />
+								<p:ajax event="change"  />
+							</p:selectOneMenu>
+						</p:outputLabel>
+
+						<h:panelGroup id="pnlGroupImprimir">
+							<h:selectBooleanCheckbox id="slcChkBoxImprimirTodos" >
+								<p:ajax event="click"  update="pnlGroupImprimir"/>
+							</h:selectBooleanCheckbox>
+							<p:outputLabel value="Todos os periodos?" id="outLabelImprimirTodos" for="slcChkBoxImprimirTodos" />
+							<br />
+							
+							<p:commandButton value="Extrato" action="#" process="pnlGroupImprimir" >
+								<f:ajax event="click" />
+							</p:commandButton>
+
+						</h:panelGroup>
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" id="pnlGridLicenca" style="width:100%;">
+
+						<p:outputLabel id="outLabelSaldo" for="optSaldo" value="Saldo atual">
+							<br />
+							<p:outputLabel id="optSaldo"  />
+						</p:outputLabel>
+
+						<p:outputLabel id="outLabelopcao" for="opcao" value="Opção">
+							<br />
+							<p:selectOneRadio id="opcao" >
+								<f:selectItem itemLabel="Lançar Folga" itemValue="1" />
+								<f:selectItem itemLabel="Validar Horas Excedidas" itemValue="2" />
+								<f:selectItem itemLabel="Extensão de Hora" itemValue="3" />
+								<p:ajax   />
+							</p:selectOneRadio>
+						</p:outputLabel>
+					</p:panelGrid>
+
+					<p:outputPanel id="outpnlOpcoesInclude">
+						<p:panel >
+							<ui:include src="/View/includes/folga/index.xhtml" />
+						</p:panel>
+						<p:panel >
+							<ui:include src="/View/includes/validarHora/index.xhtml" />
+						</p:panel>
+						<p:panel >
+							<ui:include src="/View/includes/extenderHora/index.xhtml" />
+						</p:panel>
+					</p:outputPanel>
+				</p:panel>
+			</p:outputPanel>
+
+			<p:dialog widgetVar="statusPreloader" modal="true" draggable="false" closable="false" resizable="false"
+				showHeader="false">
+				<p:graphicImage name="demo/images/preloader.gif" />
+			</p:dialog>
+		</h:form>
+
+		<script type="text/javascript">
+			function start() {
+				PF('statusDialog').show();
+			}
+
+			function stop() {
+				PF('statusDialog').hide();
+
+			}
+		</script>
+
+	</ui:define>
+</ui:composition>

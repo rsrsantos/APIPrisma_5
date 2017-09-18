@@ -1,0 +1,106 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pv="http://primefaces.org/verona">
+
+    <div class="layout-menu-wrapper">
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form id="menuform">
+                        <pv:menu>
+                            <p:menuitem id="home" value="HOME" icon="fa fa-home" outcome="/home"/>
+                            <p:submenu label="CADASTRO" icon="fa fa-plus" rendered="#{loginBean.isAdmin == true}" >
+                                <p:menuitem value="Empresa" icon="icon-users" url="/View/empresa/lista-empresa/"  />
+                                <p:menuitem value="Funcionário " icon="ui-icon-person" url="/View/funcionario/lista-funcionario/" />
+                                <p:menuitem value="Modelo/Tipo Corte " icon="icon-user" url="/View/equipamento/lista-modelo/" />
+                                <p:menuitem value="Secretaria" icon="icon-user" url="/View/secretaria/lista-secretaria/" />
+                                <p:menuitem value="Departamento " icon="icon-user" url="/View/departamento/lista-departamento/" />
+                                <p:menuitem value="Função " icon="icon-user" url="/View/funcao/lista-funcao/" />
+                                <p:menuitem value="Horário " icon="ui-icon-clock" url="/View/horario/lista-horario/"  />
+                                <p:menuitem value="Justificativa " icon="icon-user"   url="/View/justificativa/lista-justificativa/" />  
+                                <p:menuitem value="Feriado" icon="icon-user" url="/View/feriado/lista-feriado/" />
+                                <p:submenu  label="Escala" icon="icon-user"  >
+                                    <p:menuitem value="Escala Fixa" />
+                                    <p:menuitem value="Escala Mensal" />
+                                </p:submenu>
+
+                            </p:submenu>
+                            <p:submenu label="COMUNICAÇÃO" icon=" fa fa-wechat" rendered="#{loginBean.isAdmin == true}"  >
+                                <p:menuitem value="Equip. Henry " icon="icon-user" url="/View/equipamento/equipamento-Henry/" />
+                                <p:menuitem value="Equip. Elgin " icon="icon-user" url="/View/equipamento/equipamento-Elgin/" />
+                                <p:menuitem value="Enviar Funcionário " icon="icon-user" url="/View/equipamento/enviar-funcionario/" />
+                                <p:menuitem value="Excluir Funcionário " icon="icon-user" url="/View/equipamento/excluir-funcionario/" />
+                                <p:menuitem value="Enviar/Receber  Biometria " icon="icon-user" url="/View/equipamento/receber-biometria/" />
+                                <p:menuitem value="Importar Registros " icon="icon-user" url="/View/equipamento/importar-arquivo/" />
+                                <p:menuitem value="Exportar Funcionários" icon="icon-user" url="/View/equipamento/exportar-funcionario/" />
+                            </p:submenu>
+                            <p:submenu label="MOVIMENTAÇÕES" icon=" fa fa-exchange"  >
+                                <p:menuitem value="Afastamentos " icon="icon-user"   url="/View/afastamento/lista-afastamento/" />
+                                <p:menuitem value="Banco de Horas " icon="icon-user" url="/View/bancoHoras/index.xhtml"    />
+                                <p:menuitem value="Espelho Ponto " icon="icon-user"  url="/View/espelhoPonto/espelhoPonto.xhtml"  />
+                            </p:submenu>
+                            <p:submenu label="RELATÓRIOS" icon="fa fa-bar-chart-o">
+                                <p:menuitem value="Relatório Funcionários" icon="icon-users"  />
+                                <p:menuitem value="Relatório Banco de Horas" icon="icon-user" />
+                            </p:submenu>
+                            <p:submenu label="FOLHA" icon="fa fa-copy" rendered="#{loginBean.isAdmin == true}">
+                                <p:menuitem value="Layout de Exportação" icon="icon-users"  />
+                                <p:menuitem value="Exportação para Folha" icon="icon-user" />
+                                <p:menuitem value="Folha Periodo" icon="icon-user" url="/View/folha/lista-periodo/"/>
+                            </p:submenu>
+                            <p:submenu label="SEGURANÇA" icon="fa fa-lock" rendered="#{loginBean.isAdmin == true}"  >
+                                <p:menuitem value="Usuarios" icon="icon-users" url="/View/usuario/lista-usuario/" />
+                            </p:submenu>
+
+                            <p:submenu id="om_customization" label="CUSTOMIZAÇÃO" icon="fa fa-cog">
+                                <p:submenu id="om_layout_menu" label="Menu" icon="fa fa-bars">
+                                    <p:menuitem id="om_horizontal_menu" value="Horizontal Menu" icon="fa fa-bars" actionListener="#{guestPreferences.setMenuMode('horizontal')}" ajax="false"/>
+                                    <p:menuitem id="om_popup_menu" value="Popup Menu" icon="fa fa-bars" actionListener="#{guestPreferences.setMenuMode('popup')}" ajax="false"/>
+                                    <p:menuitem id="om_overlay_menu" value="Overlay Menu" icon="fa fa-bars" actionListener="#{guestPreferences.setMenuMode('overlay')}" ajax="false"/>
+                                    <p:menuitem id="om_static_menu" value="Static Menu" icon="fa fa-bars" actionListener="#{guestPreferences.setMenuMode('static')}" ajax="false"/>
+                                </p:submenu>
+                                <p:submenu id="om_layout_colors" label="Layout Colors" icon="fa fa-paint-brush">
+                                    <p:submenu id="om_layout_flat" label="Flat" icon="fa fa-paint-brush">
+                                        <p:menuitem id="om_layout_dark" value="Dark" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('dark')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_turquoise" value="Turquoise" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('turquoise')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_green" value="Green" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('green')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_blue" value="Blue" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('blue')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_rose" value="Rose" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('rose')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_teal" value="Teal" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('teal')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_bluegrey" value="Blue Grey" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('bluegrey')}" ajax="false"/>
+                                    </p:submenu>
+                                    <p:submenu id="om_layout_special" label="Special" icon="fa fa-paint-brush">
+                                        <p:menuitem id="om_layout_cosmic" value="Cosmic" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('cosmic')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_beach" value="Beach" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('beach')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_flow" value="Flow" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('flow')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_fly" value="Fly" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('fly')}" ajax="false"/>
+                                        <p:menuitem id="om_layout_nepal" value="Nepal" icon="fa fa-paint-brush" actionListener="#{guestPreferences.setLayout('nepal')}" ajax="false"/>
+                                    </p:submenu>
+                                </p:submenu>
+                                <p:submenu id="om_themes" label="Themes" icon="fa fa-magic">
+                                    <p:menuitem id="om_theme_green" value="Green Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('green')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_teal" value="Teal Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('teal')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_blue" value="Blue Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('blue')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_amber" value="Amber Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('amber')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_purple" value="Purple Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('purple')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_turquoise" value="Turquoise Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('turquoise')}" ajax="false"/>
+                                    <p:menuitem id="om_theme_bluegrey" value="Blue Grey Theme" icon="fa fa-magic" actionListener="#{guestPreferences.setTheme('bluegrey')}" ajax="false"/>
+                                </p:submenu>
+                            </p:submenu>
+
+                            <p:submenu label="SAIR" icon="fa fa-power-off">
+                                <p:menuitem ajax="false" value="Deslogar" action="#{ptoEquipamentoBeanHenry.deslogar()}" />
+                            </p:submenu>
+
+                        </pv:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

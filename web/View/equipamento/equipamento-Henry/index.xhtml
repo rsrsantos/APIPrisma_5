@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+
+        <h:form  id="form" >
+            <p:growl autoUpdate="true" id="equi" />
+
+            <p:tabView>
+                <p:tab title="Equipamentos Henry"  >
+
+                    <p:commandButton value="Novo" icon="ui-icon-circle-plus" action="/View/equipamento/cadastrar-equipamentoHenry/index" ajax="false" />
+                    <br></br> <br></br>
+                    <h:panelGrid columns="4" >
+
+
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable  id="tbl" var="ptoequipamento" value="#{ptoEquipamentoBeanHenry.ptoEquipamentos}"
+                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                              currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                              - Página: {currentPage}/{totalPages} ]"
+                                              paginator="true" rows="5" style="margin-bottom:20px">
+
+                                    <f:facet name="header">
+                                        EQUIPAMENTOS 
+                                    </f:facet>
+                                    <f:facet name="{Exporters}">
+
+                                        <p:spacer width="20" height="10"/>
+
+                                <!--<p:commandButton value="Log" image="/images/excel.png" action="#{ptoEquipamentoBeanHenry.log(item)}"/>-->
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Equipamentos"  />
+                                        </h:commandLink>
+
+                                        <p:spacer height="10"/>
+
+                                        <p:commandButton ajax="false" action="#{coletaHenry.parar()}" icon="fa fw fa-stop" />
+
+                                    </f:facet>  
+
+                                    <p:column headerText="Equipamento" filterBy="#{ptoequipamento.descricao}" sortBy="#{ptoequipamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText id="equipamento" value="#{ptoequipamento.descricao}"  />
+                                    </p:column>
+
+                                    <p:column headerText="IP" filterBy="#{ptoequipamento.ip}" sortBy="#{ptoequipamento.ip}" filterMatchMode="contains">
+                                        <h:outputText  id="ip" value="#{ptoequipamento.ip}" />
+                                    </p:column>
+
+                                    <p:column headerText="Modelo" filterBy="#{ptoequipamento.modelo}" sortBy="#{ptoequipamento.modelo}" filterMatchMode="contains">
+                                        <p:outputLabel  id="modelo" value="#{ptoequipamento.modelo}" />
+                                    </p:column>
+
+
+                                    <p:column id="nsr"   headerText="Nsr" filterBy="#{ptoequipamento.ultimonsr}" sortBy="#{ptoequipamento.ultimonsr}" filterMatchMode="contains">
+                                        <h:outputLabel   id="ultimonsr" value="#{ptoequipamento.ultimonsr} " />
+                                        <p:poll interval="3"  update="ultimonsr" />
+                                    </p:column>
+
+
+                                    <p:column headerText="Ação" style="width:240px"  >
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{ptoEquipamentoBeanHenry.editar(ptoequipamento)}"/>
+
+                                        <p:commandButton ajax="false  " icon="fa fw fa-trash-o" action="#{ptoEquipamentoBeanHenry.excluir(ptoequipamento)}"> 
+                                        </p:commandButton>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+
+                                        <p:commandButton ajax="false"  icon="fa fw fa-clock-o" action="#{ptoEquipamentoBeanHenry.hora(ptoequipamento)}"   />
+                                        <p:commandButton ajax="false"  icon="fa fw fa-cog" action="#{ptoEquipamentoBeanHenry.senhaMenu(ptoequipamento)}"  />
+                                        <p:commandButton ajax="false" action="#{coletaHenry.test()}"  icon="fa fw fa-download" />
+                                    </p:column>
+
+                                </p:dataTable >
+                            </div>
+                        </div>
+                    </h:panelGrid > 
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+        </h:form>  
+
+
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>

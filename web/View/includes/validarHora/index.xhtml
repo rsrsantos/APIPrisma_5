@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<h:form id="frm3" prependId="false">
+		<p:growl id="msgPnlValidarHora" showDetail="true" sticky="true" />
+
+			<p:dataTable id="dtTableAtestados" reflow="true" var="item" value="#{bancoHoraBean.listaEventos}" 
+				 paginator="true" rows="10" paginatorPosition="bottom" 
+				selectionMode="multiple" rowKey="#{item.id}" selection="#{bancoHoraBean.eventosSelecionados}" >
+					<p:ajax event="rowSelect" listener="#{bancoHoraBean.selecionarEvento}" />
+					<p:ajax event="rowSelect" listener="#{bancoHoraBean.removerEvento}" />
+				<f:facet name="header">
+					Validar Horas Excedidas
+				</f:facet>
+				<p:column headerText="Id" style="text-align: center;">
+					<h:outputText value="#{item.id}" />
+				</p:column>
+				<p:column headerText="Dia" sortBy="#{item.dia}" filterMatchMode="contains"
+					filterBy="#{item.dia}"  style="text-align: center;">
+					<h:outputText value="#{item.dia}" />
+				</p:column>
+				<p:column headerText="Período" sortBy="#{item.sigla}" filterMatchMode="contains" filterBy="#{item.sigla}"  style="text-align: center;">
+					<h:outputText value="#{item.sigla}" />
+				</p:column>
+				<p:column headerText="Saldo" sortBy="#{item.saldoFormatado}" filterMatchMode="contains" filterBy="#{item.saldoFormatado}"  style="text-align: center;">
+					<h:outputText value="#{item.saldoFormatado}" />
+				</p:column>
+				
+				<f:facet name="footer">
+					<p:commandButton value="Validar" update="dtTableAtestados, msg" actionListener="#{bancoHoraBean.validarEventos}" process="@this"/>
+				</f:facet>
+				
+			</p:dataTable>
+	</h:form>
+
+	<script type="text/javascript">
+		function start() {
+			PF('dlgConfirmaTroca').show();
+		}
+
+		function stop() {
+			PF('dlgConfirmaTroca').hide();
+
+		}
+	</script>
+
+</ui:composition>

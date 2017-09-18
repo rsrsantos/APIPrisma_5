@@ -1,0 +1,179 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"    
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="corpo"> 
+        <title>Espelho Ponto</title> 
+
+        <ui:include src="/View/js/calendar-pt.xhtml" />
+
+        <h:form id="form" >
+            <p:growl id="messages"  />
+            <p:panel id="pnlEscala" >
+                <p:panelGrid columns="4">
+                    <p:outputLabel for="departamento" value="Departamento ">
+                        <br/>
+                        <p:selectOneMenu filter="true" filterMatchMode="startsWith" id="departamento" value="#{espelhoPontoBean.departamento}" style="width:300px"
+                                         required="true" requiredMessage="Selecio o Departamento" converter="entityConverter">
+                            <f:attribute name="collectionType" value="java.util.ArrayList" />
+                            <f:selectItem itemLabel="Selecione..."  />
+                            <f:selectItems value="#{espelhoPontoBean.departamentos}" var="departamento" 
+                                           itemLabel="#{departamento.descricao}" itemValue="#{departamento}" />
+
+                        </p:selectOneMenu>
+
+                    </p:outputLabel>
+
+                    <p:outputLabel  value="Periodo ">
+                        <p:calendar  id="inicio" required="true" requiredMessage="Inicio" value="#{espelhoPontoBean.inicioPeriodo}" showOn="button" pattern="dd/MM/yyyy" mask="true"  
+                                             timeZone="America/Boa_Vista"/>
+                        <p:spacer width="10" />
+                        <p:outputLabel value="á" />
+                        <p:spacer width="10" />
+                        <p:calendar  id="fim" required="true" requiredMessage="Fim" value="#{espelhoPontoBean.fimPeriodo}" showOn="button" pattern="dd/MM/yyyy" mask="true"  
+                                             timeZone="America/Boa_Vista"/>
+                    </p:outputLabel>
+
+
+                    <p:commandButton action="#{espelhoPontoBean.carregarFuncionarios()}" value="Carregar"   update="messages,pnlList,pnlProcessar,pnlselecionaServidor" />
+
+                    <p:outputPanel id="pnlProcessar">
+                        <p:commandButton action="#{espelhoPontoBean.gerardatas()}" value="Processar"   rendered="#{espelhoPontoBean.carregado}" update="form:espelhoPonto" />
+                    </p:outputPanel>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:spacer width="20" />
+
+            <p:panel id="pnlList">
+                <p:panelGrid id="pnlGridlist" columns="1" style="width:100%;" >
+                    <f:facet name="header">
+                        <h:outputText id="outTextList" value="Servidores" />
+                    </f:facet>
+
+                    <p:dataTable id="dtTableUnidade" reflow="true"  var="item" selection="#{espelhoPontoBean.funcionarioSelecionado}" value="#{espelhoPontoBean.listapordepartamento}" rows="5" 
+                                 rowKey="#{item.id}"
+                                 >
+                        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                        <p:column headerText="Nome" sortBy="#{item.nome}" filterMatchMode="contains" filterBy="#{item.nome}">
+                            <h:outputText value="#{item.nome}" />
+                        </p:column>
+                        <p:column headerText="Cargo" sortBy="#{item.funcao.descricao}" filterMatchMode="contains" filterBy="#{item.funcao.descricao}">
+                            <h:outputText value="#{item.funcao.descricao}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panelGrid>
+
+                <f:facet name="footer">
+                    <p:outputPanel id="pnlselecionaServidor">
+                        <p:commandButton rendered="#{espelhoPontoBean.carregado}" process="dtTableUnidade" update="form:pnlEscalaServidor"  icon="ui-icon-search" value="Abrir" oncomplete="PF('dlgEscalaServidor').show()" />
+                    </p:outputPanel>
+                </f:facet>
+
+            </p:panel>
+
+            <p:dialog  header="Espelho de Ponto" widgetVar="dlgEscalaServidor" id="pDlgEscalaServidor" modal="true" width="1040px" height="700px">
+                <p:panel id="pnlEscalaServidor">  
+                    <p:panelGrid columns="2" id="pnlgServidor"  style="width: 100%;">
+                        <p:outputLabel value="Servidor: ">
+                            <br />
+                            <h:outputLabel id="dialogHeader" value="#{espelhoPontoBean.funcionarioSelecionado.nome}" style="font-weight:bold;" />
+                        </p:outputLabel>
+                    </p:panelGrid>
+                </p:panel>
+
+                <br />
+                <p:panel>
+                    <p:dataTable id="espelhoPonto"  var="espelho" emptyMessage="Nenhum registro encontrado" value="#{espelhoPontoBean.espelhoPontos}"  >
+
+                        <p:column sortBy="">
+                            <f:facet name="header">
+                                <h:outputText value="Data" />
+                            </f:facet>
+                            <p:outputLabel value="#{espelho.data}" />
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="entrada 01"/>
+                            </f:facet>
+                            <h:outputText value="#{espelho.entrada01}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="saida 01"/>
+                            </f:facet>
+
+                            <h:outputText value="#{espelho.saida01}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="entrada 02"/>
+                            </f:facet>
+                            <h:outputText value="#{espelho.entrada02}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="saida 02"/>
+                            </f:facet>
+                            <h:outputText value="#{espelho.saida02}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Trabalhadas"/>
+                            </f:facet>
+
+                            <h:outputText >
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Faltas"/>
+                            </f:facet>
+
+                            <h:outputText >
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ocorrência"/>
+                            </f:facet>
+
+                            <h:outputText >
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="observação"/>
+                            </f:facet>
+
+                            <h:outputText  />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+            </p:dialog>
+
+        </h:form>
+
+
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>
+

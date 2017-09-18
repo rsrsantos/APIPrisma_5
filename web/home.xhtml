@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Dashboard</ui:define>
+
+    <ui:define name="head">
+        <script type="text/javascript">
+            //<![CDATA[
+            function skinBar() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#9fd037', '#f7cb00'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#dce2e7',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    borderWidth: 0.1,
+                    borderColor: 'dce2e7',
+                    rendererOptions: {
+                        textColor: '#2d353c'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    renderer: $.jqplot.BarRenderer,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+            //]]>  
+        </script>
+        <style type="text/css">
+            .main-content {
+                padding: 0;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="corpo">
+        <div class="ui-g dashboard">            
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-1">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-paper.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <a href="#">
+                            <span class="overview-box-name">FUNCIONÁRIOS</span>
+                    </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-2">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-mail.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">EMAILS RECENTES</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-3">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-location.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">FOLHAS</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-4">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-orders.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">NOTIFICAÇÕES</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-4">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-orders.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">NOTIFICAÇÕES</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-4">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-orders.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">NOTIFICAÇÕES</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-4">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-orders.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">NOTIFICAÇÕES</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="ui-g-12 ui-md-6 ui-lg-3">
+                <div class="ui-g card overview-box overview-box-4">
+                    <div class="ui-g-4 overview-box-icon">
+                        <p:graphicImage name="images/icon-orders.png" library="verona-layout" />
+                    </div>
+                    <div class="ui-g-8">
+                        <span class="overview-box-name">NOTIFICAÇÕES</span>
+                    </div>
+                </div>
+            </div>
+
+<!--            <div class="ui-g-12 ui-lg-4 contacts">
+                <p:panel header="Usuarios Online" style="min-height:360px">
+
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
+                            <p:dataTable id="tbl" var="online" value="#{loginBean.listaOnline}" emptyMessage="Nenhum registro encontrado" 
+                                         currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                         - Página: {currentPage}/{totalPages} ]"
+                                         paginator="true" rows="8" style="margin-bottom:20px" >
+
+
+                                <p:column>
+                                    <p:outputLabel value="#{online}" />
+                                </p:column>
+
+
+                            </p:dataTable >
+
+
+                        </div>
+                    </div>
+                </p:panel>
+            </div>-->
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<h:form id="frm2" prependId="false">
+		<p:growl id="msgPnlFolga" showDetail="true" sticky="true" />
+
+		<p:panel id="pnlFolga" rendered="#{escalaBean.liberado}">
+			<p:schedule id="schedule" value="#{bancoHoraBean.calendarioEventos}" widgetVar="myschedule" locale="pt"
+						timeZone="GMT-4" timeFormat="HH:mm" rightHeaderTemplate="" initialDate="#{bancoHoraBean.dataInicialSchedule}">
+						<p:ajax event="eventSelect" listener="#{bancoHoraBean.aoClicarNoEvento}" update="schedule, optSaldo" />
+					</p:schedule>
+		</p:panel>
+
+
+	</h:form>
+
+	<script type="text/javascript">
+		function start() {
+			PF('dlgConfirmaTroca').show();
+		}
+
+		function stop() {
+			PF('dlgConfirmaTroca').hide();
+
+		}
+	</script>
+
+</ui:composition>

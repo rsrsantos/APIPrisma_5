@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="corpo">              
+        <title>Funcionários</title>
+
+        <h:form>
+            <p:growl autoUpdate="true" />
+
+            <p:tabView>
+                <p:tab title="Funcionários" >
+                    <p:commandButton value="Novo" action="/View/funcionario/cadastrar-funcionario/index" icon="ui-icon-circle-plus" ajax="false" />
+                    <br></br> <br></br>
+
+
+                    <h:panelGrid columns="4" cellpadding="10">
+                        <div class="ui-g-12">
+                            <div class="card card-w-title">
+                                <p:dataTable id="tbl" var="funcionario" value="#{funcionarioBean.funcionarios}" reflow="true" 
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
+                                             - Página: {currentPage}/{totalPages} ]"
+                                             paginator="true" rows="10" style="margin-bottom:20px">
+
+<!--                                    <f:facet name="header">
+                                        FUNCIONÁRIOS
+                                        <p:commandButton id="toggler"  type="button" value="Colunas" style="float:right" icon="fa fw fa-server" />
+                                        <p:columnToggler datasource="tbl" trigger="toggler" />
+                                    </f:facet>-->
+                                    <f:facet name="{Exporters}">
+                                        <h:commandLink>
+                                            <p:graphicImage value="/images/excel.png" width="24"  />
+                                            <p:dataExporter type="xls" target="tbl" fileName="Funcionarios"  />
+                                        </h:commandLink>
+
+                                    </f:facet>
+
+
+                                    <p:column headerText="Nome" filterBy="#{funcionario.nome}" sortBy="#{funcionario.nome}" filterMatchMode="contains">
+                                        <h:outputText id="nome" value="#{funcionario.nome}  "  />
+                                    </p:column>
+
+                                    <p:column headerText="PIS" filterBy="#{funcionario.pis}" sortBy="#{funcionario.pis}" filterMatchMode="contains">
+                                        <h:outputText  id="pis" value="#{funcionario.pis}" />
+                                    </p:column>
+
+                                    <p:column headerText="Matricula" filterBy="#{funcionario.matricula}" sortBy="#{funcionario.matricula}" filterMatchMode="contains">
+                                        <h:outputText  id="matricula" value="#{funcionario.matricula}"  />
+                                    </p:column>
+
+                                    <p:column headerText="Departamento" filterBy="#{funcionario.departamento.descricao}" sortBy="#{funcionario.departamento.descricao}" filterMatchMode="contains">
+                                        <h:outputText id="departamento" value="#{funcionario.departamento.descricao} "  />
+                                    </p:column>
+
+                                    <p:column headerText="última Alteração" filterBy="#{funcionario.ultima_alteracao}" sortBy="#{funcionario.ultima_alteracao}" filterMatchMode="contains">
+                                        <h:outputText id="ultima_altera" value="#{funcionario.ultima_alteracao} "  />
+                                    </p:column>
+
+                                    <p:column headerText="Usuario" filterBy="#{funcionario.usuario.funcionario.nome}" sortBy="#{funcionario.usuario.funcionario.nome}" filterMatchMode="contains">
+                                        <h:outputText id="usuario" value="#{funcionario.usuario.funcionario.nome} "  />
+                                    </p:column>
+
+                                    <p:column headerText="Ação"  style="width:80px">
+                                        <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{funcionarioBean.editar(funcionario)}"/>
+                                        <p:commandButton icon="fa fw fa-trash-o" ajax="false" action="#{funcionarioBean.excluir(funcionario)}"/>
+
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+
+
+
+                                </p:dataTable >
+
+                            </div>
+                        </div>
+
+
+                    </h:panelGrid > 
+
+
+
+
+
+                    <p:separator/>
+
+
+
+                </p:tab>
+
+
+            </p:tabView>
+
+
+
+        </h:form>               
+
+
+
+    </ui:define>
+
+
+
+</ui:composition>
