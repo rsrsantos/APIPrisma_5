@@ -103,7 +103,7 @@ public class FileUploadBean {
         List<String> listaRegistros = new ArrayList<String>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = "";
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()).contains(line)) {
                 listaRegistros.add(line);
             }
         } catch (IOException e) {

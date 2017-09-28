@@ -149,6 +149,11 @@ public class EspelhoPonto implements Serializable {
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
+
+    @Override
+    public String toString() {
+        return "EspelhoPonto{" + "id=" + id + ", entrada01=" + entrada01 + ", saida01=" + saida01 + ", entrada02=" + entrada02 + ", saida02=" + saida02 + ", funcionario=" + funcionario + ", usuario=" + usuario + ", folhaperiodo=" + folhaperiodo + ", nome_Funcionario=" + nome_Funcionario + ", data=" + data + ", pis=" + pis + ", periodo=" + periodo + '}';
+    }
     
     
     

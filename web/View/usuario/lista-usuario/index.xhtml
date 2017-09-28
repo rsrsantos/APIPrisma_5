@@ -19,7 +19,7 @@
                     <h:panelGrid columns="4"  styleClass="right">
                         <div class="ui-g-12">
                             <div class="card card-w-title">
-                                <p:dataTable id="tbl" var="usuario"  value="#{usuarioBean.usuarios}" emptyMessage="Nenhum registro encontrado"
+                                <p:dataTable id="tbl" var="usuario"  value="#{usuarioBean.usuarios}" emptyMessage="Nenhum registro encontrado" reflow="true"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
                                              "
                                              currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}

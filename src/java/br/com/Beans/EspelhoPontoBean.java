@@ -56,6 +56,10 @@ public class EspelhoPontoBean {
     private List<FolhaPeriodo> folhaPeriodosTeste;
     private List<FolhaPeriodoDias> folhaPeriodoDias;
     FolhaPeriodoFacade folhaPeriodoFacade = new FolhaPeriodoFacade();
+    
+    public Date getHoje(){
+        return new Date();
+    }
 
     public EspelhoPontoBean() {
 //        folhaPeriodoFacade = new FolhaPeriodoFacade();
@@ -155,6 +159,7 @@ public class EspelhoPontoBean {
         }
 
     }
+    
 
     //Gets and Setrs
     public List<Funcionario> getListapordepartamento() {
