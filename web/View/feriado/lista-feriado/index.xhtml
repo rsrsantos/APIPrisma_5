@@ -6,8 +6,8 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="corpo"> 
-        <h:form >
-            <p:growl autoUpdate="true" />
+        <h:form id="form" >
+            <p:growl id="messages" autoUpdate="true" />
             <p:tabView>
                 <p:tab title="Feriados">
                     <p:commandButton value="Novo" action="#{feriadoBean.novoFeriado(feriado)}" icon="ui-icon-circle-plus" ajax="false" />
@@ -16,14 +16,14 @@
                     <h:panelGrid columns="4" cellpadding="10" >
                         <div class="ui-g-12">
                             <div class="card card-w-title">
-                                <p:dataTable id="tbl" var="feriado"  value="#{feriadoBean.feriados}"
+                                <p:dataTable id="tblFeriados" var="feriado"  value="#{feriadoBean.feriados}"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} 
                                              "
                                              currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
                                              - Página: {currentPage}/{totalPages} ]"
                                              paginator="true" rows="10" style="margin-bottom:20px">
                                     <f:facet name="header">
-                                        EMPRESAS
+                                        FERIADOS
                                     </f:facet>
                                     <p:column headerText="ID">
                                         <h:outputText id="id" value="#{feriado.id}"  />
@@ -42,8 +42,8 @@
                                     <p:column headerText="Ação"  style="width:80px"  >
                                         <p:commandButton  ajax="false" icon="fa fw fa-edit" action="#{feriadoBean.editar(feriado)}"/>
 
-                                        <p:commandButton ajax="false" icon="fa fw fa-trash-o" action="#{feriadoBean.excluir(feriado)}" >
-                                            <!--<p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />-->
+                                        <p:commandButton icon="fa fw fa-trash-o" actionListener="#{feriadoBean.excluir(feriado)}" update="tblFeriados" >
+                                            <p:confirm header="Confirmação" message="Tem Certeza?" icon="ui-icon-alert" />
                                         </p:commandButton>
 
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

@@ -55,9 +55,10 @@ public class EspelhoPontoBean {
     private DataModel<FolhaPeriodo> dataModel;
     private List<FolhaPeriodo> folhaPeriodosTeste;
     private List<FolhaPeriodoDias> folhaPeriodoDias;
+    private List<EspelhoPonto> tabelaEspelho;
     FolhaPeriodoFacade folhaPeriodoFacade = new FolhaPeriodoFacade();
-    
-    public Date getHoje(){
+
+    public Date getHoje() {
         return new Date();
     }
 
@@ -71,6 +72,7 @@ public class EspelhoPontoBean {
     public List<Departamento> getDepartamentos() {
         return new GenericDAO<>(Departamento.class).listaTodos();
     }
+
     public List<FolhaPeriodoDias> getFolhaPeriodoDias() {
         return new GenericDAO<>(FolhaPeriodoDias.class).listaTodos();
     }
@@ -79,10 +81,8 @@ public class EspelhoPontoBean {
         return new GenericDAO<>(FolhaPeriodo.class).listaTodos();
     }
 
-    public List<PtoArquivo> getPtoArquivos() {
-        espelhofacade = new EspelhoPontoFacade();
-        return espelhofacade.buscaBatidas("12659898660", "201709");
-
+    public List<EspelhoPonto> getEspelhoPontos() {
+        return espelhofacade.buscaEspelhoPonto("12738913034", "201708");
     }
 
     public void carregarFuncionarios() {
@@ -102,42 +102,42 @@ public class EspelhoPontoBean {
 
     }
 
-    public void gerardatas() throws ParseException {
-        Date dt = null;
-
-        
-        DateFormat df = new SimpleDateFormat("dd/MM/yy");
-        DateFormat dff = new SimpleDateFormat("EEEEEE");
-
-        Date dt1 = this.getInicioPeriodo();
-        Date dt2 = this.getFimPeriodo();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dt1);
-
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(dt1);
-
-        for (dt = dt1; dt.compareTo(dt2) <= 0;) {
-            if (dt.compareTo(dt2) <= 0) {
-                listaFoo.add(df.format(dt) + " " + dff.format(dt).substring(0, 3));
-            }
-            cal1.add(Calendar.DAY_OF_WEEK, +1);
-            dt = cal1.getTime();
-            System.out.println("Datas - " + listaFoo);
-
-        }
-        
-        for(String item : listaFoo){
-            teste = item;
-            System.out.println("Dias - " + teste);
-            
-        }
-
-    }
-
+//    public void gerardatas() throws ParseException {
+//        Date dt = null;
+//
+//        DateFormat df = new SimpleDateFormat("dd/MM/yy");
+//        DateFormat dff = new SimpleDateFormat("EEEEEE");
+//
+//        Date dt1 = this.getInicioPeriodo();
+//        Date dt2 = this.getFimPeriodo();
+//
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(dt1);
+//
+//        Calendar cal1 = Calendar.getInstance();
+//        cal1.setTime(dt1);
+//
+//        for (dt = dt1; dt.compareTo(dt2) <= 0;) {
+//            if (dt.compareTo(dt2) <= 0) {
+//                listaFoo.add(df.format(dt) + " " + dff.format(dt).substring(0, 3));
+//            }
+//            cal1.add(Calendar.DAY_OF_WEEK, +1);
+//            dt = cal1.getTime();
+//            System.out.println("Datas - " + listaFoo);
+//
+//        }
+//
+//        for (String item : listaFoo) {
+//            teste = item;
+//            System.out.println("Dias - " + teste);
+//
+//        }
+//
+//    }
     public void onRowSelect(SelectEvent event) {
         funcionarioSelecionado = (Funcionario) event.getObject();
+        System.out.println(funcionarioSelecionado.getNome());
+
     }
 
     public Funcionario onRowSelect1(SelectEvent event) {
@@ -145,27 +145,16 @@ public class EspelhoPontoBean {
 
     }
 
-    public void carregaCalendario(Funcionario funcionario) {
-
-        this.funcionarioSelecionado = funcionario;
-
-        List<PtoArquivo> arquivos = espelhofacade.buscaBatidas(funcionario.getPis(), "201709");
-
-        for (PtoArquivo arquivo : arquivos) {
-            String dataBatida = sdf.format(arquivo.getData_batida());
-            ListaPeriodo.add(arquivo.getPeriodo());
-            System.out.println(ListaPeriodo);
-
-        }
-
-    }
-    
+//    public void carregaCalendario(Funcionario funcionario) {
+//
+//        espelhoPontos = espelhofacade.buscaEspelhoPonto(funcionario.getPis(), "201708");
+//        System.out.println(funcionarioSelecionado.getNome());
+//    }
 
     //Gets and Setrs
     public List<Funcionario> getListapordepartamento() {
         return listapordepartamento;
     }
-    
 
     public void setListapordepartamento(List<Funcionario> listapordepartamento) {
         this.listapordepartamento = listapordepartamento;
@@ -267,15 +256,14 @@ public class EspelhoPontoBean {
         this.ListaPeriodo = ListaPeriodo;
     }
 
-    public List<EspelhoPonto> getEspelhoPontos() {
-//        espelhofacade = new EspelhoPontoFacade();
-//      
-//        funcionarioSelecionado = dataModeloFuncionarioSlecionado.getRowData();
-//        System.out.println(funcionarioSelecionado.getNome());
-        return espelhoPontos = espelhofacade.buscaEspelhoPonto("12659898660", "0917");
-
-    }
-
+//    public List<EspelhoPonto> getEspelhoPontos() {
+////        espelhofacade = new EspelhoPontoFacade();
+////      
+////        funcionarioSelecionado = dataModeloFuncionarioSlecionado.getRowData();
+////        System.out.println(funcionarioSelecionado.getNome());
+//        return espelhoPontos = espelhofacade.buscaEspelhoPonto("13744465275", "201708");
+//
+//    }
     public void setEspelhoPontos(List<EspelhoPonto> espelhoPontos) {
         this.espelhoPontos = espelhoPontos;
     }
@@ -346,9 +334,12 @@ public class EspelhoPontoBean {
         this.folhaDias = folhaDias;
     }
 
-    
-    
-    
-    
+    public List<EspelhoPonto> getTabelaEspelho() {
+        return tabelaEspelho;
+    }
+
+    public void setTabelaEspelho(List<EspelhoPonto> tabelaEspelho) {
+        this.tabelaEspelho = tabelaEspelho;
+    }
 
 }

@@ -1,6 +1,7 @@
 package br.com.Model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,10 +26,10 @@ public class Secretaria implements Serializable {
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
-
-    @ManyToOne
-    @JoinColumn(name = "secretario_id")
-    private Secretario secretario;
+    
+    @OneToOne
+    @JoinColumn(name = "Funcionario_Secretario_id")
+    private Funcionario funcionario;
 
     // Gets and Seters ===================================
     public long getId() {
@@ -54,18 +56,21 @@ public class Secretaria implements Serializable {
         this.empresa = empresa;
     }
 
-    public Secretario getSecretario() {
-        return secretario;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setSecretario(Secretario secretario) {
-        this.secretario = secretario;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 3;
+        hash = 23 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        hash = 23 * hash + Objects.hashCode(this.empresa);
+        hash = 23 * hash + Objects.hashCode(this.funcionario);
         return hash;
     }
 
@@ -84,7 +89,21 @@ public class Secretaria implements Serializable {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.empresa, other.empresa)) {
+            return false;
+        }
+        if (!Objects.equals(this.funcionario, other.funcionario)) {
+            return false;
+        }
         return true;
     }
+    
+    
+
+
+   
 
 }

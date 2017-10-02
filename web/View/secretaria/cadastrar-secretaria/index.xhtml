@@ -22,9 +22,18 @@
                         <p:outputLabel value="Empresa:"/>
                         <p:selectOneMenu id="empresa" value="#{secretariaBean.secretaria.empresa}"  
                                          converter="entityConverter" required="true" requiredMessage="Selecio a Empresa">
-                            <f:selectItem itemLabel="Selecione a Empresa"  />
+                            <f:selectItem itemLabel="Selecione..."  noSelectionOption="true" />
                             <f:selectItems value="#{secretariaBean.empresas}" var="empresa" 
                                            itemLabel="#{empresa.empresa}" itemValue="#{empresa}" />
+                            <p:ajax event="blur" listener="#{secretariaBean.carregarSecretarios()}" update="secretario"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Secretario: "/>
+                        <p:selectOneMenu id="secretario" value="#{secretariaBean.secretaria.funcionario}"  
+                                         converter="entityConverter" required="true" requiredMessage="Selecio o Secretario">
+                            <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                            <f:selectItems value="#{secretariaBean.secretarios}" var="secretario" 
+                                           itemLabel="#{secretario.nome}" itemValue="#{secretario}" />
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Descrição:"/>

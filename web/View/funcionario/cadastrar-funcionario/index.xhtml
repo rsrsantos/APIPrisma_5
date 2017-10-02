@@ -33,7 +33,11 @@
                             <p:inputText required="true" requiredMessage="Preencha o PIS" id="pis" value="#{funcionarioBean.funcionario.pis}" size="20" >
                             </p:inputText>
 
-
+                            <h:outputLabel value="Secretário(a):  " >
+                                <p:selectBooleanCheckbox  value="#{funcionarioBean.funcionario.secretario}" disabled="#{usuarioBean.oculta()}"    >
+                                </p:selectBooleanCheckbox>
+                            </h:outputLabel>
+                            
                         </p:panelGrid>   
                     </div>
 

@@ -1,11 +1,16 @@
 package br.com.Beans;
 
+import Facade.EspelhoPontoFacade;
+import Facade.SecretariaFacade;
 import br.com.DAO.GenericDAO;
 import br.com.Model.Departamento;
 import br.com.Model.Empresa;
+import br.com.Model.EspelhoPonto;
+import br.com.Model.Funcionario;
 import br.com.Model.Secretaria;
 import br.com.Model.Usuario;
 import br.com.utils.Msg;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,6 +24,8 @@ public class SecretariaBean {
     FacesContext context = FacesContext.getCurrentInstance();
     Usuario usuarioLogado = (Usuario) context.getExternalContext().getSessionMap().get("usuarioLogado");
     Secretaria secretaria = new Secretaria();
+    private List<Funcionario> secretarios;
+    SecretariaFacade secretariaFacade = new SecretariaFacade();
 
     public List<Secretaria> getSecretarias() {
         return new GenericDAO<>(Secretaria.class).listaTodos();
@@ -27,6 +34,13 @@ public class SecretariaBean {
 
     public List<Empresa> getEmpresas() {
         return new GenericDAO<>(Empresa.class).listaTodos();
+
+    }
+    
+    
+    public void carregarSecretarios() {
+
+        secretarios = secretariaFacade.buscaSecretario();
 
     }
 
@@ -94,12 +108,22 @@ public class SecretariaBean {
 
     }
 
+    
+
     public Secretaria getSecretaria() {
         return secretaria;
     }
 
     public void setSecretaria(Secretaria secretaria) {
         this.secretaria = secretaria;
+    }
+
+    public List<Funcionario> getSecretarios() {
+        return secretarios;
+    }
+
+    public void setSecretarios(List<Funcionario> secretarios) {
+        this.secretarios = secretarios;
     }
 
 }

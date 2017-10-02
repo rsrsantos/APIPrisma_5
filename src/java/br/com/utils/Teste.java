@@ -1,6 +1,8 @@
 package br.com.utils;
 
 import Facade.EspelhoPontoFacade;
+import Facade.SecretariaFacade;
+import br.com.Model.Funcionario;
 import br.com.Model.PtoArquivo;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,15 +16,24 @@ public class Teste {
 
     public static void main(String[] args) throws ParseException {
         EspelhoPontoFacade af = new EspelhoPontoFacade();
+        SecretariaFacade secretaria = new SecretariaFacade();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         final List<String> listaPis = new ArrayList<>();
 
         List<PtoArquivo> arquivos = af.buscaBatidas("12659898660", "201708");
-//
-        for (PtoArquivo arquivo : arquivos) {
-            System.err.println("Funcionario: id "  + arquivo.getPis() + " - " + "Hora: " + arquivo.getHora() + " - " + "Data: " + sdf.format(arquivo.getData_batida()));
+        List<Funcionario> funcionarios = secretaria.buscaSecretario();
+        
+        for( Funcionario item : funcionarios){
+            
+            System.out.println("Scretario: " + item.getNome());
+        
         }
-//        
+        
+//
+//        for (PtoArquivo arquivo : arquivos) {
+//            System.err.println("Funcionario: id "  + arquivo.getPis() + " - " + "Hora: " + arquivo.getHora() + " - " + "Data: " + sdf.format(arquivo.getData_batida()));
+//        }
+////        
 
 // Pesquisa Funcionario pelo PIS
 //        FuncionarioFacade f = new FuncionarioFacade();

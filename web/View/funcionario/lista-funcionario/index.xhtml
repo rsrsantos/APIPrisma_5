@@ -21,17 +21,17 @@
                     <h:panelGrid columns="4" cellpadding="10">
                         <div class="ui-g-12">
                             <div class="card card-w-title">
-                                <p:dataTable id="tbl" var="funcionario" value="#{funcionarioBean.funcionarios}" reflow="true" 
+                                <p:dataTable id="tblFuncionarios" var="funcionario" value="#{funcionarioBean.funcionarios}" reflow="true" 
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                              currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords}
                                              - Página: {currentPage}/{totalPages} ]"
                                              paginator="true" rows="10" style="margin-bottom:20px">
 
-<!--                                    <f:facet name="header">
-                                        FUNCIONÁRIOS
-                                        <p:commandButton id="toggler"  type="button" value="Colunas" style="float:right" icon="fa fw fa-server" />
-                                        <p:columnToggler datasource="tbl" trigger="toggler" />
-                                    </f:facet>-->
+                                    <!--                                    <f:facet name="header">
+                                                                            FUNCIONÁRIOS
+                                                                            <p:commandButton id="toggler"  type="button" value="Colunas" style="float:right" icon="fa fw fa-server" />
+                                                                            <p:columnToggler datasource="tbl" trigger="toggler" />
+                                                                        </f:facet>-->
                                     <f:facet name="{Exporters}">
                                         <h:commandLink>
                                             <p:graphicImage value="/images/excel.png" width="24"  />
@@ -67,8 +67,9 @@
 
                                     <p:column headerText="Ação"  style="width:80px">
                                         <p:commandButton icon="fa fw fa-edit" ajax="false" action="#{funcionarioBean.editar(funcionario)}"/>
-                                        <p:commandButton icon="fa fw fa-trash-o" ajax="false" action="#{funcionarioBean.excluir(funcionario)}"/>
-
+                                        <p:commandButton icon="fa fw fa-trash-o" update="tblFuncionarios" actionListener="#{funcionarioBean.excluir(funcionario)}">
+                                            <p:confirm header="Confirmation" message="Tem Certeza?" icon="ui-icon-alert" />
+                                        </p:commandButton>
 
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

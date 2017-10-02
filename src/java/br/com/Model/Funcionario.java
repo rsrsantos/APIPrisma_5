@@ -2,7 +2,6 @@ package br.com.Model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,6 +56,12 @@ public class Funcionario implements Serializable {
     @OneToOne
     @JoinColumn(name = "horario_id")
     private Horario horario;
+    
+    private Boolean secretario;
+
+    public Funcionario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     // Gets and Seters ====================================================
     public Departamento getDepartamento() {
@@ -146,6 +151,16 @@ public class Funcionario implements Serializable {
     public void setHorario(Horario horario) {
         this.horario = horario;
     }
+
+    public Boolean getSecretario() {
+        return secretario;
+    }
+
+    public void setSecretario(Boolean secretario) {
+        this.secretario = secretario;
+    }
+    
+    
 
 
     //Hascode and Equals
